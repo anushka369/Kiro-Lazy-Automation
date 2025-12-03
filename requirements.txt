@@ -1,0 +1,4 @@
+click>=8.1.0
+hypothesis>=6.92.0
+pytest>=7.4.0
+PyYAML>=6.0.0

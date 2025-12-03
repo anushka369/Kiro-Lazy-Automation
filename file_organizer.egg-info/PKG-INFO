@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: file-organizer
+Version: 0.1.0
+Summary: A command-line tool for automating file management tasks
+Requires-Python: >=3.8
+Requires-Dist: click>=8.1.0
+Requires-Dist: hypothesis>=6.92.0
+Requires-Dist: pytest>=7.4.0
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
