@@ -1,0 +1,205 @@
+# Example Configuration File for File Organizer Custom Rules
+# 
+# This file demonstrates how to define custom organization rules for the File Organizer tool.
+# Rules are applied in priority order (lower numbers = higher priority).
+# When multiple rules match a file, only the first matching rule is applied.
+#
+# Pattern Types:
+#   - Glob patterns: Use standard wildcards like *, ?, [abc], {jpg,png}
+#   - Regex patterns: Prefix with "regex:" for regular expression matching
+#
+# Usage:
+#   file-organizer custom --rules example_rules.yaml --target-dir ~/Downloads
+
+rules:
+  # ============================================================================
+  # DEVELOPMENT FILES
+  # ============================================================================
+  
+  # Python test files (highest priority to catch before general Python files)
+  - name: Python test files
+    pattern: "test_*.py"
+    destination: tests
+    priority: 1
+  
+  # Python source files
+  - name: Python source
+    pattern: "*.py"
+    destination: src/python
+    priority: 2
+  
+  # JavaScript/TypeScript files
+  - name: JavaScript files
+    pattern: "*.{js,jsx,ts,tsx}"
+    destination: src/javascript
+    priority: 3
+  
+  # Configuration files
+  - name: Config files
+    pattern: "*.{yaml,yml,json,toml,ini,cfg,conf}"
+    destination: config
+    priority: 4
+  
+  # ============================================================================
+  # DOCUMENTS
+  # ============================================================================
+  
+  # Invoices and receipts (using regex to match common patterns)
+  - name: Invoices
+    pattern: "regex:(?i)(invoice|receipt).*\\.(pdf|png|jpg)"
+    destination: documents/financial/invoices
+    priority: 10
+  
+  # Reports
+  - name: Report documents
+    pattern: "regex:(?i).*report.*\\.(pdf|docx?|txt)"
+    destination: documents/reports
+    priority: 11
+  
+  # PDF documents (general)
+  - name: PDF documents
+    pattern: "*.pdf"
+    destination: documents/pdfs
+    priority: 12
+  
+  # Word documents
+  - name: Word documents
+    pattern: "*.{doc,docx}"
+    destination: documents/word
+    priority: 13
+  
+  # Spreadsheets
+  - name: Spreadsheets
+    pattern: "*.{xls,xlsx,csv}"
+    destination: documents/spreadsheets
+    priority: 14
+  
+  # Presentations
+  - name: Presentations
+    pattern: "*.{ppt,pptx}"
+    destination: documents/presentations
+    priority: 15
+  
+  # ============================================================================
+  # MEDIA FILES
+  # ============================================================================
+  
+  # Screenshots (common naming patterns)
+  - name: Screenshots
+    pattern: "regex:(?i)(screenshot|screen shot|capture).*\\.(png|jpg)"
+    destination: media/screenshots
+    priority: 20
+  
+  # Photos from cameras (common prefixes)
+  - name: Camera photos
+    pattern: "regex:^(IMG|DSC|DCIM|P)_?[0-9]+\\.(jpg|jpeg|raw|cr2|nef)"
+    destination: media/photos/camera
+    priority: 21
+  
+  # Image files (general)
+  - name: Images
+    pattern: "*.{jpg,jpeg,png,gif,bmp,svg,webp}"
+    destination: media/images
+    priority: 22
+  
+  # Video files
+  - name: Videos
+    pattern: "*.{mp4,avi,mkv,mov,wmv,flv,webm}"
+    destination: media/videos
+    priority: 23
+  
+  # Audio files
+  - name: Audio
+    pattern: "*.{mp3,wav,flac,aac,ogg,m4a}"
+    destination: media/audio
+    priority: 24
+  
+  # ============================================================================
+  # ARCHIVES AND BACKUPS
+  # ============================================================================
+  
+  # Backup files (files with backup in name or _backup suffix)
+  - name: Backup files
+    pattern: "regex:(?i).*backup.*"
+    destination: backups
+    priority: 30
+  
+  # Compressed archives
+  - name: Archives
+    pattern: "*.{zip,tar,gz,rar,7z,bz2,xz}"
+    destination: archives
+    priority: 31
+  
+  # ============================================================================
+  # TEMPORARY AND SYSTEM FILES
+  # ============================================================================
+  
+  # Temporary files
+  - name: Temp files
+    pattern: "*.{tmp,temp,cache}"
+    destination: temp
+    priority: 40
+  
+  # Log files
+  - name: Log files
+    pattern: "*.log"
+    destination: logs
+    priority: 41
+  
+  # ============================================================================
+  # SPECIAL PATTERNS
+  # ============================================================================
+  
+  # Files starting with numbers (e.g., "001_document.pdf")
+  - name: Numbered files
+    pattern: "regex:^[0-9]+[_-].*"
+    destination: numbered
+    priority: 50
+  
+  # Files with dates in name (YYYY-MM-DD format)
+  - name: Dated files
+    pattern: "regex:.*[0-9]{4}-[0-9]{2}-[0-9]{2}.*"
+    destination: dated
+    priority: 51
+  
+  # Draft files
+  - name: Drafts
+    pattern: "regex:(?i)(draft|wip|work.?in.?progress).*"
+    destination: drafts
+    priority: 52
+  
+  # Final versions
+  - name: Final versions
+    pattern: "regex:(?i).*final.*"
+    destination: final
+    priority: 53
+
+# ============================================================================
+# NOTES:
+# ============================================================================
+#
+# 1. Priority Matters: Rules are evaluated in priority order. Lower numbers
+#    are checked first. This is important when rules might overlap.
+#
+# 2. First Match Wins: Once a file matches a rule, no other rules are checked
+#    for that file.
+#
+# 3. Regex Flags: Use (?i) at the start of regex patterns for case-insensitive
+#    matching.
+#
+# 4. Destination Paths: All destination paths are relative to the target
+#    directory specified in the command.
+#
+# 5. Testing: Always use --dry-run first to preview what will happen:
+#    file-organizer custom --rules example_rules.yaml --dry-run --verbose
+#
+# 6. Glob Patterns: Standard glob syntax is supported:
+#    * matches any characters
+#    ? matches single character
+#    [abc] matches any character in brackets
+#    {jpg,png} matches any of the comma-separated patterns
+#
+# 7. Regex Patterns: Must be prefixed with "regex:" and use Python regex syntax.
+#    Remember to escape special characters like . ( ) [ ] { } + * ? ^ $ | \
+#
+# ============================================================================
